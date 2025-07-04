@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 841.9 1190.6">
+  <!-- Generator: Adobe Illustrator 29.4.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 152)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: url(#Gradiente_sem_nome_3);
+      }
+    </style>
+    <linearGradient id="Gradiente_sem_nome_3" data-name="Gradiente sem nome 3" x1="421" y1="1199.2" x2="421" y2="-8.6" gradientTransform="translate(0 0)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#24041f"/>
+      <stop offset=".2" stop-color="#434a80"/>
+      <stop offset=".3" stop-color="#787ca4"/>
+      <stop offset=".4" stop-color="#b7b7cf"/>
+      <stop offset=".6" stop-color="#e1bddf"/>
+      <stop offset=".7" stop-color="#e8cbe8"/>
+      <stop offset=".8" stop-color="#f5f1fe"/>
+      <stop offset=".9" stop-color="#f0e0f2"/>
+      <stop offset="1" stop-color="#e1aed0"/>
+      <stop offset="1" stop-color="#d88ebb"/>
+    </linearGradient>
+  </defs>
+  <g id="Camada_1-2">
+    <rect class="st0" x="-6.1" y="-8.6" width="854.1" height="1807.8"/>
+  </g>
+</svg>

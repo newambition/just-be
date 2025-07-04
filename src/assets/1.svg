@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1350 2128" class="absolute top-0 left-0 w-full h-dvh">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #54715d;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-2 {
+        fill: #fff;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-3 {
+        fill: #fff392;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-4 {
+        fill: #5b9080;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-5 {
+        fill: #528495;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-6 {
+        fill: #ea537c;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-7 {
+        fill: #8d6b8e;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-8 {
+        fill: url(#linear-gradient);
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+      }
+
+      .cls-9 {
+        fill: #e96e80;
+        opacity: .5;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+        }
+    </style>
+    <linearGradient id="linear-gradient" x1="648" y1="1178.62" x2="648" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffb9bd"/>
+      <stop offset=".21" stop-color="#fcb8bd"/>
+      <stop offset=".36" stop-color="#f3b7be"/>
+      <stop offset=".48" stop-color="#e3b5c0"/>
+      <stop offset=".6" stop-color="#cdb3c4"/>
+      <stop offset=".71" stop-color="#b1afc8"/>
+      <stop offset=".81" stop-color="#8eabcd"/>
+      <stop offset=".9" stop-color="#66a6d3"/>
+      <stop offset="1" stop-color="#38a1d9"/>
+      <stop offset="1" stop-color="#36a1da"/>
+    </linearGradient>
+  </defs>
+  <rect class="cls-8" width="1296" height="1178.62"/>
+  <polygon class="cls-2" points="897.24 1053.58 1036.83 1132.49 925.74 1201.91 850.91 1160 897.24 1053.58"/>
+  <polygon class="cls-2" points="757.6 809.97 1117.57 0 1296 0 1296 136.31 801.39 837.31 757.6 809.97"/>
+  <polygon class="cls-2" points="836.31 870.3 1296 453.11 1296 724.66 862.93 907 836.31 870.3"/>
+  <polygon class="cls-2" points="884.09 952.38 1296 922.66 1296 1117.06 894.57 993.47 884.09 952.38"/>
+  <polygon class="cls-2" points="698.91 789.9 849.49 0 496.31 0 607.72 787.95 698.91 789.9"/>
+  <polygon class="cls-2" points="549.51 804.87 239.17 0 0 0 0 87.97 513.62 823.88 549.51 804.87"/>
+  <polygon class="cls-2" points="465.39 864 0 453.11 0 717.46 433.08 907 465.39 864"/>
+  <polygon class="cls-2" points="408.58 962.66 0 907 0 1092.85 398.49 1019.86 408.58 962.66"/>
+  <polygon class="cls-2" points="401.66 1077.17 274.75 1154.6 462.27 1201.91 401.66 1077.17"/>
+  <circle class="cls-3" cx="648" cy="1034.66" r="249.94"/>
+  <path class="cls-6" d="M1296,1084.66c-77.63,32.91-165.2-23.15-217.07-23.96s-209.59,117.92-437.83,147.64l654.9,191.06v-314.74Z"/>
+  <path class="cls-9" d="M0,1181.34s200.09-84.34,245.34-88.46,1050.66,306.51,1050.66,306.51H0v-218.06Z"/>
+  <path class="cls-7" d="M648,1294.19s226.83-61.42,342.03-100.51,305.97,10.23,305.97,10.23v298.34l-648-208.06Z"/>
+  <polygon class="cls-4" points="0 1533.11 1296 1234.83 1296 1516.66 0 1533.11"/>
+  <path class="cls-5" d="M0,1154.6c421.51,50.4,734.28,109.13,849.49,183L0,1633.91v-479.31Z"/>
+  <path class="cls-1" d="M0,1362.37s160.57-88.46,292.66-88.46,1003.34,277.71,1003.34,277.71L0,1570.14v-207.77Z"/>
+  <path class="cls-10" d="M1296,1374.71c-381.06-34.28-809.57,144.07-1296,158.4v194.89h1296v-353.29Z"/>
+</svg>

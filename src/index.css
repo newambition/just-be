@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Quicksand", sans-serif;
+}
+
+h1 {
+  font-family: "Quicksand", serif;
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .animate-force-gpu {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-gradient-to-r from-sky-700 via-sky-900 to-sky-700;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-br from-fuchsia-300 to-sky-400;
+    @apply text-sky-900 font-bold py-3 px-8 rounded-full shadow-xl shadow-sky-900/20;
+    @apply transition-all duration-500 ease-in-out;
+    @apply hover:from-fuchsia-300/80 hover:to-sky-400/80 hover:shadow-sky-900/40 hover:scale-105;
+  }
+}
