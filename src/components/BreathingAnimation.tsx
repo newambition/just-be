@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BreathingPhase } from "../types";
 
 interface BreathingAnimationProps {
@@ -14,7 +14,16 @@ const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
   countdown,
   isExpanded,
 }) => {
-  const scale = isExpanded ? "scale-135" : "scale-100";
+  // Internal state to manage scale, initialized to 1 (not expanded).
+  const [scale, setScale] = useState(1);
+
+  // This effect listens for changes to the `isExpanded` prop and
+  // updates the internal scale state, which triggers the transition.
+  // This works for both the initial animation and all subsequent phases.
+  useEffect(() => {
+    const targetScale = isExpanded ? 1.35 : 1;
+    setScale(targetScale);
+  }, [isExpanded]);
 
   // Define color schemes for different phases for better visual feedback
   let gradientClasses = "";
@@ -23,32 +32,30 @@ const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
   } else if (phase === BreathingPhase.Exhale) {
     gradientClasses = "from-purple-400 to-indigo-700";
   } else if (phase === BreathingPhase.Hold) {
-    if (isExpanded) {
-      // Hold after Inhale
-      gradientClasses = "from-teal-400 to-cyan-600";
-    } else {
-      // Hold after Exhale
-      gradientClasses = "from-purple-500 to-indigo-800";
-    }
+    gradientClasses = "from-teal-400 to-cyan-600";
   }
 
-  // The transition duration should match the step duration to sync animation with the timer.
+  // Manually define the animation styles to avoid class conflicts
   const animationStyle = {
-    transitionDuration: `${duration}s`,
+    transition: `transform ${duration}s ease-in-out, background-color ${duration}s ease-in-out`,
+    transform: `translateZ(0) scale(${scale})`, // Use the internal 'scale' state
+    willChange: "transform",
+  };
+
+  const innerAnimationStyle = {
+    ...animationStyle,
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
   };
 
   return (
-    <div className="relative w-64 h-64 flex items-center justify-center">
+    <div className="relative w-64 h-64 flex items-center justify-center mb-10">
       <div
-        className={`absolute w-full h-full rounded-full bg-gradient-to-br ${gradientClasses} opacity-50 transition-[transform,background-color] ease-in-out ${scale} animate-force-gpu`}
+        className={`absolute w-full h-full rounded-full bg-gradient-to-br ${gradientClasses} opacity-50`}
         style={animationStyle}
       />
       <div
-        className={`w-5/6 h-5/6 rounded-full bg-gradient-to-br ${gradientClasses} shadow-2xl shadow-sky-500/30 flex items-center justify-center transition-[transform,background-color] ${scale} animate-force-gpu`}
-        style={{
-          ...animationStyle,
-          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
+        className={`w-5/6 h-5/6 rounded-full bg-gradient-to-br ${gradientClasses} shadow-2xl shadow-sky-500/30 flex items-center justify-center`}
+        style={innerAnimationStyle}
       >
         <span className="text-7xl font-bold text-white tabular-nums font-quicksand">
           {countdown}

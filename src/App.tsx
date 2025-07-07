@@ -1,50 +1,49 @@
-import React, { useState } from "react";
-import type { BreathingExercise } from "./types";
-import PresetSelection from "./components/PresetSelection";
-import ExerciseScreen from "./components/ExerciseScreen";
+import React from "react";
+import PresetSelectionPage from "./pages/PresetSelectionPage";
+import ExercisePage from "./pages/ExercisePage";
+import SplashScreen from "./components/SplashScreen";
+import Nav from "./components/nav";
+import { useBreathingApp } from "./hooks/useBreathingApp";
 
 const App: React.FC = () => {
-  const [selectedExercise, setSelectedExercise] =
-    useState<BreathingExercise | null>(null);
+  const {
+    loading,
+    selectedExercise,
+    handleSelectExercise,
+    handleCompleteExercise,
+  } = useBreathingApp();
 
-  const handleSelectExercise = (exercise: BreathingExercise) => {
-    setSelectedExercise(exercise);
-  };
+  if (loading) {
+    return <SplashScreen />;
+  }
 
-  const handleCompleteExercise = () => {
-    setSelectedExercise(null);
-  };
-
-  const background = new URL("./assets/background.svg", import.meta.url).href;
+  const backgroundImage = new URL("./assets/background.svg", import.meta.url)
+    .href;
   return (
-    <div className="h-dvh overflow-y-auto scrollbar-hide bg-slate-900 text-white flex flex-col items-center justify-center p-4 font-sans relative">
+    // Use min-h-dvh to allow the container to grow with content
+    <div className="min-h-dvh bg-slate-900 text-white font-sans relative">
       <img
-        src={background}
-        alt="Just Be"
-        className="w-full h-full absolute top-0 left-0 object-cover brightness-90 opacity-85 overflow-visible"
+        src={backgroundImage}
+        alt="Just Be Background"
+        // Use fixed positioning to cover the entire viewport, even on scroll
+        className="w-full h-full fixed top-0 left-0 object-cover brightness-75 blur-sm"
       />
 
-      <main className="w-full max-w-md mx-auto relative">
-        <h1 className="text-4xl font-bold font-quicksand text-center text-sky-800 my-2 tracking-tighter first-letter:text-4xl first-letter:font-bold flex flex-col items-center">
-          Just Be.
-          <span className="text-sky-900 text-2xl font-semibold ">
-            One Breath at a Time
-          </span>
-        </h1>
-
-        {selectedExercise ? (
-          <ExerciseScreen
-            exercise={selectedExercise}
-            onComplete={handleCompleteExercise}
-          />
-        ) : (
-          <PresetSelection onSelectExercise={handleSelectExercise} />
-        )}
-
-        <footer className="text-center mt-4 text-slate-400 text-xs">
-          <p>Find your center. One breath at a time.</p>
-        </footer>
+      {/* Add a relative positioning context for the main content */}
+      <main className="relative w-full max-w-md sm:max-w-6xl mx-auto  flex flex-col min-h-dvh">
+        {/* Added flex-grow to make this section fill available space */}
+        <div className=" flex-grow flex flex-col items-center justify-center ">
+          {selectedExercise ? (
+            <ExercisePage
+              exercise={selectedExercise}
+              onComplete={handleCompleteExercise}
+            />
+          ) : (
+            <PresetSelectionPage onSelectExercise={handleSelectExercise} />
+          )}
+        </div>
       </main>
+      <Nav />
     </div>
   );
 };

@@ -26,8 +26,23 @@ h1 {
 }
 
 @layer components {
+  .progress-arc-track {
+    stroke: #cbd5e1;
+    stroke-opacity: 0.2;
+    stroke-linecap: round;
+    fill: none;
+    stroke-width: 4;
+  }
+
+  .progress-arc-fill {
+    stroke: #cbd5e1;
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.35s ease-out;
+  }
   .text-gradient {
-    @apply bg-gradient-to-r from-sky-700 via-sky-900 to-sky-700;
+    @apply bg-gradient-to-r from-fuchsia-600 to-sky-500;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -38,5 +53,14 @@ h1 {
     @apply text-sky-900 font-bold py-3 px-8 rounded-full shadow-xl shadow-sky-900/20;
     @apply transition-all duration-500 ease-in-out;
     @apply hover:from-fuchsia-300/80 hover:to-sky-400/80 hover:shadow-sky-900/40 hover:scale-105;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #0ea5e9;
+    transform: scale(0.75);
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #0ea5e9;
   }
 }
