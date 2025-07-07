@@ -56,7 +56,12 @@ const PresetSelectionPage: React.FC<PresetSelectionProps> = ({
 
   return (
     <div className="w-full flex-grow flex flex-col justify-center  animate-fade-in">
-      <h2 className="mb-8 text-center text-lg font-semibold tracking-tighter text-slate-200 font-quicksand">
+      <img
+        src="/just-beLogo.png"
+        alt="Just Be"
+        className="w-24 h-24 mx-auto -mt-24 mb-4 md:mt-8 md:ml-2"
+      />
+      <h2 className="mb-8  text-center text-lg font-semibold tracking-tighter text-slate-200 font-quicksand">
         Choose Your Session
       </h2>
 

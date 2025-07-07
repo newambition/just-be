@@ -32,7 +32,7 @@ const App: React.FC = () => {
       {/* Add a relative positioning context for the main content */}
       <main className="relative w-full max-w-md sm:max-w-6xl mx-auto  flex flex-col min-h-dvh">
         {/* Added flex-grow to make this section fill available space */}
-        <div className=" flex-grow flex flex-col items-center justify-center ">
+        <div className=" flex-grow flex flex-col items-center justify-center mb-4">
           {selectedExercise ? (
             <ExercisePage
               exercise={selectedExercise}

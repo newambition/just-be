@@ -9,7 +9,7 @@ export const useBreathingApp = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500); // 2.5 seconds
+    }, 4000); // 4 seconds
 
     return () => clearTimeout(timer);
   }, []);
