@@ -20,3 +20,21 @@ export interface BreathingExercise {
   mood: string;
   icon: ReactNode;
 }
+
+export interface SessionLog {
+  exerciseId: string;
+  completedAt: string; // ISO string
+}
+
+export interface History {
+  lastSession: SessionLog | null;
+  counts: { [exerciseId: string]: number };
+  streak: number;
+  lastSessionDate: string | null; // YYYY-MM-DD
+}
+
+export interface AppSettings {
+  hapticsEnabled: boolean;
+  remindersEnabled: boolean;
+  favoriteExercises: string[];
+}

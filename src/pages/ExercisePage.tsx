@@ -4,22 +4,33 @@ import React, {
   useCallback,
   useRef,
   useMemo,
+  useContext,
 } from "react";
 import type { BreathingExercise } from "../types";
 import { BreathingPhase } from "../types";
 import BreathingAnimation from "../components/BreathingAnimation";
 import { FaChevronLeft } from "react-icons/fa";
 import Countdown from "react-countdown";
+import { AppContext } from "../context/AppContext";
 
 interface ExerciseScreenProps {
   exercise: BreathingExercise;
   onComplete: () => void;
 }
 
+const triggerHapticFeedback = () => {
+  if (navigator.vibrate) {
+    navigator.vibrate(50);
+  }
+};
+
 const ExercisePage: React.FC<ExerciseScreenProps> = ({
   exercise,
   onComplete,
 }) => {
+  const appContext = useContext(AppContext);
+  const { settings } = appContext!;
+
   const [sessionState, setSessionState] = useState<
     "ready" | "running" | "finished"
   >("ready");
@@ -47,6 +58,10 @@ const ExercisePage: React.FC<ExerciseScreenProps> = ({
       exercise.pattern[stepIndex - 1].phase === BreathingPhase.Inhale);
 
   const advanceStep = useCallback(() => {
+    if (settings.hapticsEnabled) {
+      triggerHapticFeedback();
+    }
+
     const nextStepIndex = stepIndex + 1;
     if (nextStepIndex < exercise.pattern.length) {
       setStepIndex(nextStepIndex);
@@ -61,7 +76,7 @@ const ExercisePage: React.FC<ExerciseScreenProps> = ({
         setSessionState("finished");
       }
     }
-  }, [stepIndex, cycle, exercise]);
+  }, [stepIndex, cycle, exercise, settings.hapticsEnabled]);
 
   useEffect(() => {
     if (sessionState !== "running") return;
@@ -129,6 +144,9 @@ const ExercisePage: React.FC<ExerciseScreenProps> = ({
   }, [sessionState]);
 
   const startSession = () => {
+    if (settings.hapticsEnabled) {
+      triggerHapticFeedback();
+    }
     setSessionState("running");
     setCountdown(exercise.pattern[0].duration);
     sessionStartTimeRef.current = Date.now();

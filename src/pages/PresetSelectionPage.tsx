@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import type { BreathingExercise } from "../types";
 import { breathingExercises } from "../data/exercises";
+import { AppContext } from "../context/AppContext";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 // Swiper imports for mobile carousel
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,23 +17,42 @@ interface PresetSelectionProps {
 const PresetCard: React.FC<{
   exercise: BreathingExercise;
   onSelect: () => void;
+  isFavorite: boolean;
+  onToggleFavorite: (e: React.MouseEvent) => void;
   className?: string; // Optional className for grid spanning
-}> = ({ exercise, onSelect, className = "" }) => {
+}> = ({ exercise, onSelect, isFavorite, onToggleFavorite, className = "" }) => {
   return (
     <div
-      className={`flex h-full w-full flex-col items-center justify-center rounded-2xl border border-slate-700 bg-slate-800/50 p-6 text-center backdrop-blur-xs shadow-lg transition-all duration-300 hover:border-sky-400 hover:bg-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-400 ${className}`}
+      className={`relative flex h-full w-full flex-col rounded-2xl border border-slate-700 bg-slate-800/50 p-6 text-center backdrop-blur-xs shadow-lg transition-all duration-300 hover:border-sky-400 hover:bg-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-400 font-quicksand ${className}`}
     >
-      <div className="mb-12">{exercise.icon}</div>
-      <div className="flex flex-col">
-        <p className="font-semibold uppercase tracking-wider text-sky-400">
-          {exercise.mood}
-        </p>
-        <h3 className="mt-2 text-xl font-bold text-slate-100">
-          {exercise.title}
-        </h3>
-        <p className="mt-4 text-sm text-slate-200/90">{exercise.description}</p>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleFavorite(e);
+        }}
+        className="absolute top-4 right-4 text-rose-400 hover:text-rose-300 transition-colors z-10 p-2 font-quicksand"
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+      >
+        {isFavorite ? <FaHeart size={22} /> : <FaRegHeart size={22} />}
+      </button>
+
+      <div className="flex flex-col items-center justify-center flex-grow space-y-6">
+        <div className="text-2xl sm:text-5xl font-quicksand">
+          {exercise.icon}
+        </div>
+        <div className="space-y-6">
+          <p className="font-semibold uppercase tracking-wider text-sky-400 text-sm sm:text-base font-quicksand">
+            {exercise.mood}
+          </p>
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-100 font-quicksand">
+            {exercise.title}
+          </h3>
+          <p className="text-sm sm:text-base text-slate-200/90 leading-relaxed max-w-[220px] mx-auto font-quicksand">
+            {exercise.description}
+          </p>
+        </div>
       </div>
-      <button onClick={onSelect} className="btn btn-primary mt-12">
+      <button onClick={onSelect} className="btn btn-primary mt-6 mb-4 w-full">
         Start
       </button>
     </div>
@@ -41,6 +62,19 @@ const PresetCard: React.FC<{
 const PresetSelectionPage: React.FC<PresetSelectionProps> = ({
   onSelectExercise,
 }) => {
+  const appContext = useContext(AppContext);
+  if (!appContext) return null;
+
+  const { settings, toggleFavorite } = appContext;
+
+  const favoriteExercises = useMemo(
+    () =>
+      breathingExercises.filter((ex) =>
+        settings.favoriteExercises.includes(ex.id)
+      ),
+    [settings.favoriteExercises]
+  );
+
   // Define the layout classes for the bento grid
   // This will make some cards wider than others
   const bentoLayoutClasses = [
@@ -54,13 +88,13 @@ const PresetSelectionPage: React.FC<PresetSelectionProps> = ({
     "md:col-span-2", // Just... Be
   ];
 
+  const handleToggleFavorite = (e: React.MouseEvent, exerciseId: string) => {
+    e.stopPropagation();
+    toggleFavorite(exerciseId);
+  };
+
   return (
     <div className="w-full flex-grow flex flex-col justify-center  animate-fade-in">
-      <img
-        src="/just-beLogo.png"
-        alt="Just Be"
-        className="w-24 h-24 mx-auto -mt-24 mb-4 md:mt-8 md:ml-2"
-      />
       <h2 className="mb-8  text-center text-lg font-semibold tracking-tighter text-slate-200 font-quicksand">
         Choose Your Session
       </h2>
@@ -93,6 +127,8 @@ const PresetSelectionPage: React.FC<PresetSelectionProps> = ({
               <PresetCard
                 exercise={exercise}
                 onSelect={() => onSelectExercise(exercise)}
+                isFavorite={settings.favoriteExercises.includes(exercise.id)}
+                onToggleFavorite={(e) => handleToggleFavorite(e, exercise.id)}
               />
             </SwiperSlide>
           ))}
@@ -100,16 +136,45 @@ const PresetSelectionPage: React.FC<PresetSelectionProps> = ({
       </div>
 
       {/* Desktop View: Bento Grid (visible on medium screens and up) */}
-      <div className="hidden md:block w-full max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 md:auto-rows-fr gap-4">
-          {breathingExercises.map((exercise, index) => (
-            <div key={exercise.id} className={bentoLayoutClasses[index]}>
-              <PresetCard
-                exercise={exercise}
-                onSelect={() => onSelectExercise(exercise)}
-              />
+      <div className="hidden md:block w-full max-w-7xl mx-auto space-y-8">
+        {favoriteExercises.length > 0 && (
+          <div>
+            <h3 className="text-xl font-bold text-slate-200 mb-4 pl-2 font-quicksand">
+              Favorites
+            </h3>
+            <div className="grid md:grid-cols-4 md:auto-rows-fr gap-4">
+              {favoriteExercises.map((exercise) => (
+                <div key={`fav-${exercise.id}`} className="md:col-span-1">
+                  <PresetCard
+                    exercise={exercise}
+                    onSelect={() => onSelectExercise(exercise)}
+                    isFavorite={true}
+                    onToggleFavorite={(e) =>
+                      handleToggleFavorite(e, exercise.id)
+                    }
+                  />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+        )}
+
+        <div>
+          <h3 className="text-xl font-bold text-slate-200 mb-4 pl-2 font-quicksand">
+            All Exercises
+          </h3>
+          <div className="grid md:grid-cols-4 md:auto-rows-fr gap-4">
+            {breathingExercises.map((exercise, index) => (
+              <div key={exercise.id} className={bentoLayoutClasses[index]}>
+                <PresetCard
+                  exercise={exercise}
+                  onSelect={() => onSelectExercise(exercise)}
+                  isFavorite={settings.favoriteExercises.includes(exercise.id)}
+                  onToggleFavorite={(e) => handleToggleFavorite(e, exercise.id)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
