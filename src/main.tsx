@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import "./firebase";
 import "./index.css";
 import { AppProvider } from "./context/AppContext";
+import { AuthProvider } from "./context/AuthContext";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -12,8 +15,12 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

@@ -41,6 +41,7 @@ h1 {
     stroke-linecap: round;
     transition: stroke-dashoffset 0.35s ease-out;
   }
+
   .text-gradient {
     @apply bg-gradient-to-r from-fuchsia-600 to-sky-500;
     background-clip: text;

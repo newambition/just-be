@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import type { BreathingExercise, SessionLog } from "../types";
 import { AppContext } from "../context/AppContext";
+import { logExerciseCompletion } from "../services/analyticsService";
 
 export const useAppLogic = () => {
-  const [selectedExercise, setSelectedExercise] =
-    useState<BreathingExercise | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [activePage, setActivePage] = useState<"home" | "history">("home");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const appContext = useContext(AppContext);
   if (!appContext) {
@@ -15,35 +14,20 @@ export const useAppLogic = () => {
   }
   const { logSession } = appContext;
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleSelectExercise = (exercise: BreathingExercise) => {
-    setSelectedExercise(exercise);
-    setActivePage("home");
+    navigate(`/exercise/${exercise.id}`);
   };
 
-  const handleCompleteExercise = () => {
-    if (selectedExercise) {
+  const handleCompleteExercise = (exercise?: BreathingExercise) => {
+    if (exercise) {
       const sessionLog: SessionLog = {
-        exerciseId: selectedExercise.id,
+        exerciseId: exercise.id,
         completedAt: new Date().toISOString(),
       };
       logSession(sessionLog);
+      logExerciseCompletion(exercise.id, exercise.title);
     }
-    setSelectedExercise(null);
-    setActivePage("home");
-  };
-
-  const handleNavigate = (page: "home" | "history") => {
-    setSelectedExercise(null);
-    setActivePage(page);
-    setIsSettingsOpen(false);
+    navigate("/");
   };
 
   const toggleSettings = () => {
@@ -51,13 +35,9 @@ export const useAppLogic = () => {
   };
 
   return {
-    loading,
-    selectedExercise,
-    activePage,
     isSettingsOpen,
     handleSelectExercise,
     handleCompleteExercise,
-    handleNavigate,
     toggleSettings,
   };
 };

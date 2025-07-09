@@ -1,0 +1,96 @@
+[
+  {
+    "id": "just-center",
+    "title": "Just... Center",
+    "description": "Find your focus and calm your nerves with this simple, structured breathing pattern.",
+    "mood": "Focus & Calm",
+    "totalCycles": 8,
+    "pattern": [
+      { "phase": "Inhale", "duration": 4 },
+      { "phase": "Hold", "duration": 4 },
+      { "phase": "Exhale", "duration": 4 },
+      { "phase": "Hold", "duration": 4 }
+    ]
+  },
+  {
+    "id": "just-sleep",
+    "title": "Just... Sleep",
+    "description": "A powerful relaxing breath known to reduce anxiety and prepare the body for deep rest.",
+    "mood": "Deep Relaxation",
+    "totalCycles": 5,
+    "pattern": [
+      { "phase": "Inhale", "duration": 4 },
+      { "phase": "Hold", "duration": 7 },
+      { "phase": "Exhale", "duration": 8 }
+    ]
+  },
+  {
+    "id": "just-awaken",
+    "title": "Just... Awaken",
+    "description": "A quick and powerful exercise to start your day with a boost of natural energy and alertness.",
+    "mood": "Energy Boost",
+    "totalCycles": 10,
+    "pattern": [
+      { "phase": "Inhale", "duration": 3 },
+      { "phase": "Exhale", "duration": 3 }
+    ]
+  },
+  {
+    "id": "just-release",
+    "title": "Just... Release",
+    "description": "Based on the 'Physiological Sigh,' this rapidly reduces stress by resetting the nervous system.",
+    "mood": "Instant Relief",
+    "totalCycles": 5,
+    "pattern": [
+      { "phase": "Inhale", "duration": 3 },
+      { "phase": "Inhale", "duration": 1 },
+      { "phase": "Exhale", "duration": 6 }
+    ]
+  },
+  {
+    "id": "just-flow",
+    "title": "Just... Flow",
+    "description": "Known as 'Coherent Breathing,' this balances the heart and mind, building resilience to stress.",
+    "mood": "Build Resilience",
+    "totalCycles": 8,
+    "pattern": [
+      { "phase": "Inhale", "duration": 5 },
+      { "phase": "Exhale", "duration": 5 }
+    ]
+  },
+  {
+    "id": "just-balance",
+    "title": "Just... Balance",
+    "description": "A simple 'Unilateral' breath to harmonize the left and right sides of the brain, enhancing clarity.",
+    "mood": "Mental Clarity",
+    "totalCycles": 7,
+    "pattern": [
+      { "phase": "Inhale", "duration": 4 },
+      { "phase": "Exhale", "duration": 6 },
+      { "phase": "Inhale", "duration": 4 },
+      { "phase": "Exhale", "duration": 6 }
+    ]
+  },
+  {
+    "id": "just-settle",
+    "title": "Just... Settle",
+    "description": "A foundational 'Diaphragmatic' breath to anchor you in the present and reduce physical tension.",
+    "mood": "Grounding",
+    "totalCycles": 6,
+    "pattern": [
+      { "phase": "Inhale", "duration": 4 },
+      { "phase": "Exhale", "duration": 8 }
+    ]
+  },
+  {
+    "id": "just-be",
+    "title": "Just... Be",
+    "description": "A gentle rhythm to bring your heart rate to a resonant frequency, promoting deep, restorative calm.",
+    "mood": "Restorative Calm",
+    "totalCycles": 7,
+    "pattern": [
+      { "phase": "Inhale", "duration": 4 },
+      { "phase": "Exhale", "duration": 6 }
+    ]
+  }
+]

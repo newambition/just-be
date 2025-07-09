@@ -1,49 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Routes, Route, Outlet, useLocation, Navigate } from "react-router-dom";
 import PresetSelectionPage from "./pages/PresetSelectionPage";
 import ExercisePage from "./pages/ExercisePage";
 import HistoryPage from "./pages/HistoryPage";
+import AuthPage from "./pages/AuthPage";
 import SplashScreen from "./components/SplashScreen";
 import Nav from "./components/nav";
 import SettingsPanel from "./components/SettingsPanel";
 import { useAppLogic } from "./hooks/useAppLogic";
+import { AppContext } from "./context/AppContext";
+import { AuthContext } from "./context/AuthContext";
 
-const App: React.FC = () => {
-  const {
-    loading,
-    selectedExercise,
-    activePage,
-    isSettingsOpen,
-    handleSelectExercise,
-    handleCompleteExercise,
-    handleNavigate,
-    toggleSettings,
-  } = useAppLogic();
-
-  if (loading) {
-    return <SplashScreen />;
-  }
+const AppLayout: React.FC = () => {
+  const { isSettingsOpen, toggleSettings } = useAppLogic();
+  const location = useLocation();
 
   const backgroundImage = new URL("./assets/background.svg", import.meta.url)
     .href;
-
-  const renderPage = () => {
-    if (selectedExercise) {
-      return (
-        <ExercisePage
-          exercise={selectedExercise}
-          onComplete={handleCompleteExercise}
-        />
-      );
-    }
-    switch (activePage) {
-      case "home":
-        return <PresetSelectionPage onSelectExercise={handleSelectExercise} />;
-      case "history":
-        return <HistoryPage />;
-      default:
-        return <PresetSelectionPage onSelectExercise={handleSelectExercise} />;
-    }
-  };
 
   return (
     <div className="min-h-dvh bg-slate-900 text-white font-sans relative">
@@ -57,18 +30,54 @@ const App: React.FC = () => {
       <main className="relative w-full max-w-md sm:max-w-6xl mx-auto flex flex-col min-h-dvh">
         <div
           className={`flex-grow flex flex-col items-center mb-4 ${
-            activePage === "history" ? "justify-start" : "justify-center"
+            location.pathname === "/history"
+              ? "justify-start"
+              : "justify-center"
           }`}
         >
-          {renderPage()}
+          <Outlet />
         </div>
       </main>
-      <Nav
-        activePage={activePage}
-        onNavigate={handleNavigate}
-        onToggleSettings={toggleSettings}
-      />
+
+      {/* Hide nav only during exercise, but keep it in DOM for transitions */}
+      <div
+        className={
+          location.pathname.includes("/exercise")
+            ? "opacity-0 pointer-events-none"
+            : ""
+        }
+      >
+        <Nav onToggleSettings={toggleSettings} />
+      </div>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  const appContext = useContext(AppContext);
+  const authContext = useContext(AuthContext);
+
+  if (appContext?.appIsLoading) {
+    return <SplashScreen />;
+  }
+
+  return (
+    <Routes>
+      <Route
+        path="/auth"
+        element={authContext?.currentUser ? <Navigate to="/" /> : <AuthPage />}
+      />
+      <Route
+        path="/"
+        element={
+          authContext?.currentUser ? <AppLayout /> : <Navigate to="/auth" />
+        }
+      >
+        <Route index element={<PresetSelectionPage />} />
+        <Route path="history" element={<HistoryPage />} />
+        <Route path="exercise/:exerciseId" element={<ExercisePage />} />
+      </Route>
+    </Routes>
   );
 };
 

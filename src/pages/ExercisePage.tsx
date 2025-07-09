@@ -6,17 +6,14 @@ import React, {
   useMemo,
   useContext,
 } from "react";
-import type { BreathingExercise } from "../types";
+import { useParams } from "react-router-dom";
 import { BreathingPhase } from "../types";
 import BreathingAnimation from "../components/BreathingAnimation";
 import { FaChevronLeft } from "react-icons/fa";
 import Countdown from "react-countdown";
 import { AppContext } from "../context/AppContext";
-
-interface ExerciseScreenProps {
-  exercise: BreathingExercise;
-  onComplete: () => void;
-}
+import { breathingExercises } from "../data/exercises";
+import { useAppLogic } from "../hooks/useAppLogic";
 
 const triggerHapticFeedback = () => {
   if (navigator.vibrate) {
@@ -24,10 +21,26 @@ const triggerHapticFeedback = () => {
   }
 };
 
-const ExercisePage: React.FC<ExerciseScreenProps> = ({
-  exercise,
-  onComplete,
-}) => {
+const ExercisePage: React.FC = () => {
+  const { exerciseId } = useParams<{ exerciseId: string }>();
+  const { handleCompleteExercise } = useAppLogic();
+
+  const exercise = breathingExercises.find((ex) => ex.id === exerciseId);
+
+  if (!exercise) {
+    return (
+      <div className="text-center p-8">
+        <h2 className="text-2xl text-red-400">Exercise not found</h2>
+        <button
+          onClick={() => handleCompleteExercise()}
+          className="mt-4 text-sky-400 hover:text-sky-300"
+        >
+          Back to exercises
+        </button>
+      </div>
+    );
+  }
+
   const appContext = useContext(AppContext);
   const { settings } = appContext!;
 
@@ -153,6 +166,10 @@ const ExercisePage: React.FC<ExerciseScreenProps> = ({
     setProgress(0);
   };
 
+  const onComplete = () => {
+    handleCompleteExercise(exercise);
+  };
+
   const phaseText =
     currentStep.phase === BreathingPhase.Hold ? `Hold` : currentStep.phase;
   const phaseColor = {
@@ -164,15 +181,18 @@ const ExercisePage: React.FC<ExerciseScreenProps> = ({
   if (sessionState === "finished") {
     return (
       <div className="text-center p-8 flex flex-col items-center justify-center h-96 animate-fade-in">
-        <h2 className="text-3xl font-bold text-sky-300">Session Complete</h2>
-        <p className="text-slate-300 mt-4 text-lg">
+        <h2 className="text-3xl font-bold text-sky-300 font-quicksand">
+          Session Complete
+        </h2>
+        <p className="text-slate-300 mt-4 text-lg font-quicksand text-center">
           Great job.
           <br />
-          You've completed the {exercise.title} exercise.
+          You've completed <br />
+          {exercise.title}
         </p>
         <button
           onClick={onComplete}
-          className="mt-8 bg-sky-500 hover:bg-sky-600 transition-colors text-white font-bold py-3 px-8 rounded-full shadow-lg"
+          className="mt-8 bg-sky-500 hover:bg-sky-600 transition-colors text-white font-bold py-3 px-8 rounded-full shadow-lg font-quicksand"
         >
           Done
         </button>
@@ -196,7 +216,7 @@ const ExercisePage: React.FC<ExerciseScreenProps> = ({
           </h2>
         </div>
         <button
-          onClick={onComplete}
+          onClick={() => handleCompleteExercise()}
           className="mt-4 text-slate-300 hover:text-slate-200 transition-colors text-sm font-quicksand"
         >
           Choose another
@@ -208,7 +228,7 @@ const ExercisePage: React.FC<ExerciseScreenProps> = ({
   return (
     <div className="flex flex-col items-center justify-between p-4 h-[40rem] animate-fade-in relative">
       <button
-        onClick={onComplete}
+        onClick={() => handleCompleteExercise()}
         className="absolute -top-14 -left-2"
         aria-label="Back to presets"
       >
