@@ -3,6 +3,7 @@ import { useAppLogic } from "../hooks/useAppLogic";
 import type { BreathingExercise } from "../types";
 import { getExercises } from "../services/firestoreService";
 import { AppContext } from "../context/AppContext";
+import { AuthContext } from "../context/AuthContext";
 import {
   FaHeart,
   FaRegHeart,
@@ -43,36 +44,36 @@ const PresetCard: React.FC<{
 
   return (
     <div
-      className={`relative flex h-full w-full flex-col rounded-2xl border border-slate-700 bg-slate-800/50 p-6 text-center backdrop-blur-xs shadow-lg transition-all duration-300 hover:border-sky-400 hover:bg-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-400 font-quicksand ${className}`}
+      className={`backdrop-blur-xs relative flex size-full flex-col rounded-2xl border border-slate-700 bg-slate-800/50 p-6 text-center font-quicksand shadow-lg transition-all duration-300 hover:border-sky-400 hover:bg-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-400 ${className}`}
     >
       <button
         onClick={(e) => {
           e.stopPropagation();
           onToggleFavorite(e);
         }}
-        className="absolute top-4 right-4 text-rose-400 hover:text-rose-300 transition-colors z-10 p-2 font-quicksand"
+        className="absolute right-4 top-4 z-10 p-2 font-quicksand text-rose-400 transition-colors hover:text-rose-300"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         {isFavorite ? <FaHeart size={22} /> : <FaRegHeart size={22} />}
       </button>
 
-      <div className="flex flex-col items-center justify-center flex-grow space-y-6">
-        <div className="text-2xl sm:text-5xl font-quicksand">
+      <div className="flex grow flex-col items-center justify-center space-y-6">
+        <div className="font-quicksand text-2xl sm:text-5xl">
           {iconMap[exercise.id]}
         </div>
         <div className="space-y-6">
-          <p className="font-semibold uppercase tracking-wider text-sky-400 text-sm sm:text-base font-quicksand">
+          <p className="font-quicksand text-sm font-semibold uppercase tracking-wider text-sky-400 sm:text-base">
             {exercise.mood}
           </p>
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-100 font-quicksand">
+          <h3 className="font-quicksand text-xl font-bold text-slate-100 sm:text-2xl">
             {exercise.title}
           </h3>
-          <p className="text-sm sm:text-base text-slate-200/90 leading-relaxed max-w-[220px] mx-auto font-quicksand">
+          <p className="mx-auto max-w-[220px] font-quicksand text-sm leading-relaxed text-slate-200/90 sm:text-base">
             {exercise.description}
           </p>
         </div>
       </div>
-      <button onClick={onSelect} className="btn btn-primary mt-6 mb-4 w-full">
+      <button onClick={onSelect} className="btn btn-primary mb-4 mt-6 w-full">
         Start
       </button>
     </div>
@@ -82,6 +83,7 @@ const PresetCard: React.FC<{
 const PresetSelectionPage: React.FC = () => {
   const { handleSelectExercise } = useAppLogic();
   const appContext = useContext(AppContext);
+  const authContext = useContext(AuthContext);
   const [breathingExercises, setBreathingExercises] = useState<
     BreathingExercise[]
   >([]);
@@ -135,16 +137,19 @@ const PresetSelectionPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex-grow flex flex-col justify-center  animate-fade-in">
-      <h2 className="mb-8 md:mt-8  text-center text-lg font-semibold tracking-tighter text-slate-200 font-quicksand">
+    <div className="animate-fade-in flex w-full grow flex-col  justify-center">
+      <h1 className="text-center font-quicksand text-4xl font-bold text-slate-200">
+        Hi {authContext?.currentUser?.displayName || ""}
+      </h1>
+      <h2 className="mb-8 text-center  font-quicksand text-lg font-semibold tracking-tighter text-slate-200 md:mt-8">
         Choose Your Session
       </h2>
 
       {/* Mobile View: 3D Carousel (hidden on medium screens and up) */}
-      <div className="md:hidden h-[60vh] w-full">
+      <div className="h-[60vh] w-full md:hidden">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="text-slate-400 text-lg font-quicksand">
+          <div className="flex h-full items-center justify-center">
+            <div className="font-quicksand text-lg text-slate-400">
               Loading exercises...
             </div>
           </div>
@@ -169,7 +174,7 @@ const PresetSelectionPage: React.FC = () => {
             }}
             navigation={true}
             modules={[EffectCoverflow, Pagination, Navigation]}
-            className="h-full w-full"
+            className="size-full"
             onSwiper={() => {
               // Swiper will initialize properly with the key prop
             }}
@@ -177,7 +182,7 @@ const PresetSelectionPage: React.FC = () => {
             {breathingExercises.map((exercise) => (
               <SwiperSlide
                 key={exercise.id}
-                className="w-3/4 max-w-[280px] h-full"
+                className="h-full w-3/4 max-w-[280px]"
               >
                 <PresetCard
                   exercise={exercise}
@@ -192,10 +197,10 @@ const PresetSelectionPage: React.FC = () => {
       </div>
 
       {/* Desktop View: Bento Grid (visible on medium screens and up) */}
-      <div className="hidden md:block w-full max-w-7xl mx-auto space-y-8">
+      <div className="mx-auto hidden w-full max-w-7xl space-y-8 md:block">
         {isLoading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="text-slate-400 text-lg font-quicksand">
+          <div className="flex h-64 items-center justify-center">
+            <div className="font-quicksand text-lg text-slate-400">
               Loading exercises...
             </div>
           </div>
@@ -203,10 +208,10 @@ const PresetSelectionPage: React.FC = () => {
           <>
             {favoriteExercises.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold text-slate-200 mb-4 pl-2 font-quicksand">
+                <h3 className="mb-4 pl-2 font-quicksand text-xl font-bold text-slate-200">
                   Favorites
                 </h3>
-                <div className="grid md:grid-cols-4 md:auto-rows-fr gap-4">
+                <div className="grid gap-4 md:auto-rows-fr md:grid-cols-4">
                   {favoriteExercises.map((exercise) => (
                     <div key={`fav-${exercise.id}`} className="md:col-span-1">
                       <PresetCard
@@ -224,10 +229,10 @@ const PresetSelectionPage: React.FC = () => {
             )}
 
             <div>
-              <h3 className="text-xl font-bold text-slate-200 mb-4 pl-2 font-quicksand">
+              <h3 className="mb-4 pl-2 font-quicksand text-xl font-bold text-slate-200">
                 All Exercises
               </h3>
-              <div className="grid md:grid-cols-4 md:auto-rows-fr gap-4">
+              <div className="grid gap-4 md:auto-rows-fr md:grid-cols-4">
                 {breathingExercises.map((exercise, index) => (
                   <div key={exercise.id} className={bentoLayoutClasses[index]}>
                     <PresetCard

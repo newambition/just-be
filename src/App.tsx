@@ -19,17 +19,17 @@ const AppLayout: React.FC = () => {
     .href;
 
   return (
-    <div className="min-h-dvh bg-slate-900 text-white font-sans relative">
+    <div className="relative min-h-dvh bg-slate-900 font-sans text-white">
       <img
         src={backgroundImage}
         alt="Just Be Background"
-        className="w-full h-full fixed top-0 left-0 object-cover brightness-75 blur-sm"
+        className="fixed left-0 top-0 size-full object-cover blur-sm brightness-75"
       />
       <SettingsPanel isOpen={isSettingsOpen} onClose={toggleSettings} />
 
-      <main className="relative w-full max-w-md sm:max-w-6xl mx-auto flex flex-col min-h-dvh">
+      <main className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col sm:max-w-6xl">
         <div
-          className={`flex-grow flex flex-col items-center mb-4 ${
+          className={`mb-4 flex grow flex-col items-center ${
             location.pathname === "/history"
               ? "justify-start"
               : "justify-center"
@@ -43,7 +43,7 @@ const AppLayout: React.FC = () => {
       <div
         className={
           location.pathname.includes("/exercise")
-            ? "opacity-0 pointer-events-none"
+            ? "pointer-events-none opacity-0"
             : ""
         }
       >

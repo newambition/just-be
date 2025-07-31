@@ -64,21 +64,21 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full bg-slate-800/80 backdrop-blur-lg shadow-2xl z-50 transition-transform duration-300 ease-in-out ${
+      className={`fixed right-0 top-0 z-50 h-full bg-slate-800/80 shadow-2xl backdrop-blur-lg transition-transform duration-300 ease-in-out ${
         isOpen ? "translate-x-0" : "translate-x-full"
-      } w-72 sm:w-80 p-6 flex flex-col`}
+      } flex w-72 flex-col p-6 sm:w-80`}
     >
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-100 font-quicksand">
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="font-quicksand text-2xl font-bold text-slate-100">
           Settings
         </h2>
         <button
           onClick={onClose}
-          className="text-slate-400 hover:text-white transition-colors"
+          className="text-slate-400 transition-colors hover:text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="size-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -93,37 +93,37 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
         </button>
       </div>
 
-      <div className="flex-grow">
+      <div className="grow">
         <ul>
-          <li className="flex justify-between items-center py-4 border-b border-slate-700">
-            <span className="text-slate-200 font-quicksand">
+          <li className="flex items-center justify-between border-b border-slate-700 py-4">
+            <span className="font-quicksand text-slate-200">
               Haptic Feedback
             </span>
             <button
               onClick={() => handleToggle("hapticsEnabled")}
-              className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors ${
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                 settings.hapticsEnabled ? "bg-sky-500" : "bg-slate-600"
               }`}
             >
               <span
-                className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform ${
+                className={`inline-block size-4 rounded-full bg-white transition-transform${
                   settings.hapticsEnabled ? "translate-x-6" : "translate-x-1"
                 }`}
               />
             </button>
           </li>
-          <li className="flex justify-between items-center py-4 border-b border-slate-700">
-            <span className="text-slate-200 font-quicksand">
+          <li className="flex items-center justify-between border-b border-slate-700 py-4">
+            <span className="font-quicksand text-slate-200">
               Daily Reminders
             </span>
             <button
               onClick={() => handleToggle("remindersEnabled")}
-              className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors ${
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                 settings.remindersEnabled ? "bg-sky-500" : "bg-slate-600"
               }`}
             >
               <span
-                className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform ${
+                className={`inline-block size-4 rounded-full bg-white transition-transform${
                   settings.remindersEnabled ? "translate-x-6" : "translate-x-1"
                 }`}
               />
@@ -133,10 +133,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
       </div>
 
       {/* Auth Button at Bottom */}
-      <div className="mt-auto pt-6 border-t border-slate-700">
+      <div className="mt-auto border-t border-slate-700 pt-6">
         <button
           onClick={handleAuthAction}
-          className="w-full flex items-center justify-center gap-3 bg-slate-700 hover:bg-slate-600 text-slate-200 hover:text-white transition-colors py-3 px-4 rounded-lg font-medium"
+          className="flex w-full items-center justify-center gap-3 rounded-lg bg-slate-700 px-4 py-3 font-medium text-slate-200 transition-colors hover:bg-slate-600 hover:text-white"
         >
           {currentUser ? (
             <>
@@ -151,7 +151,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
           )}
         </button>
         {currentUser && (
-          <p className="text-slate-400 text-sm text-center mt-2 truncate font-quicksand">
+          <p className="mt-2 truncate text-center font-quicksand text-sm text-slate-400">
             {currentUser.email}
           </p>
         )}

@@ -3,24 +3,31 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
-import { globalIgnores } from "eslint/config";
 import tailwindcss from "eslint-plugin-tailwindcss";
 
-export default tseslint.config([
-  globalIgnores(["dist"]),
+export default tseslint.config(
+  {
+    ignores: ["dist"],
+  },
   {
     files: ["**/*.{ts,tsx}"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs["recommended-latest"],
-      reactRefresh.configs.vite,
-      "plugin:tailwindcss/recommended",
-      tailwindcss.configs.recommended,
-    ],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      tailwindcss: tailwindcss,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
+      ...tailwindcss.configs.recommended.rules,
+    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-  },
-]);
+  }
+);

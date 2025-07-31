@@ -26,6 +26,10 @@ const defaultHistory: History = {
   counts: {},
   streak: 0,
   lastSessionDate: null,
+  totalBreaths: 0,
+  minutesBreathing: 0,
+  longestStreak: 0,
+  totalSessions: 0,
 };
 
 // Get user data or create it if it doesn't exist
@@ -38,9 +42,17 @@ export const getUserData = async (
   if (userDocSnap.exists()) {
     const data = userDocSnap.data();
     // Merge with defaults to ensure all keys are present
+    const userHistory = data.history || {};
     return {
       settings: { ...defaultSettings, ...data.settings },
-      history: { ...defaultHistory, ...data.history },
+      history: {
+        ...defaultHistory,
+        ...userHistory,
+        totalBreaths: userHistory.totalBreaths || 0,
+        minutesBreathing: userHistory.minutesBreathing || 0,
+        longestStreak: userHistory.longestStreak || 0,
+        totalSessions: userHistory.totalSessions || 0,
+      },
     };
   } else {
     // Create new user document
@@ -82,11 +94,26 @@ export const logUserSession = async (
   const newCounts = { ...userData.history.counts };
   newCounts[session.exerciseId] = (newCounts[session.exerciseId] || 0) + 1;
 
+  const currentHistory = userData.history;
+  const newTotalBreaths =
+    (currentHistory.totalBreaths || 0) + session.breathsCount;
+  const newMinutesBreathing =
+    (currentHistory.minutesBreathing || 0) + Math.round(session.duration / 60);
+  const newLongestStreak = Math.max(
+    currentHistory.longestStreak || 0,
+    newStreak
+  );
+  const newTotalSessions = (currentHistory.totalSessions || 0) + 1;
+
   const newHistory: History = {
     lastSession: session,
     counts: newCounts,
     streak: newStreak,
     lastSessionDate: today,
+    totalBreaths: newTotalBreaths,
+    minutesBreathing: newMinutesBreathing,
+    longestStreak: newLongestStreak,
+    totalSessions: newTotalSessions,
   };
 
   await updateDoc(userDocRef, { history: newHistory });

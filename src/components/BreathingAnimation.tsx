@@ -48,16 +48,16 @@ const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
   };
 
   return (
-    <div className="relative w-64 h-64 flex items-center justify-center mb-10">
+    <div className="relative mb-10 flex size-64 items-center justify-center">
       <div
-        className={`absolute w-full h-full rounded-full bg-gradient-to-br ${gradientClasses} opacity-50`}
+        className={`absolute size-full rounded-full bg-gradient-to-br ${gradientClasses} opacity-50`}
         style={animationStyle}
       />
       <div
-        className={`w-5/6 h-5/6 rounded-full bg-gradient-to-br ${gradientClasses} shadow-2xl shadow-sky-500/30 flex items-center justify-center`}
+        className={`size-5/6 rounded-full bg-gradient-to-br ${gradientClasses} flex items-center justify-center shadow-2xl shadow-sky-500/30`}
         style={innerAnimationStyle}
       >
-        <span className="text-7xl font-bold text-white tabular-nums font-quicksand">
+        <span className="font-quicksand text-7xl font-bold tabular-nums text-white">
           {countdown}
         </span>
       </div>

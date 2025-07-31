@@ -42,6 +42,10 @@ const defaultHistory: History = {
   counts: {},
   streak: 0,
   lastSessionDate: null,
+  totalBreaths: 0,
+  minutesBreathing: 0,
+  longestStreak: 0,
+  totalSessions: 0,
 };
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
@@ -62,7 +66,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
           if (docSnap.exists()) {
             const data = docSnap.data();
             setSettings({ ...defaultSettings, ...data.settings });
-            setHistory({ ...defaultHistory, ...data.history });
+            // Ensure all history fields have proper defaults
+            const userHistory = data.history || {};
+            setHistory({
+              ...defaultHistory,
+              ...userHistory,
+              totalBreaths: userHistory.totalBreaths || 0,
+              minutesBreathing: userHistory.minutesBreathing || 0,
+              longestStreak: userHistory.longestStreak || 0,
+              totalSessions: userHistory.totalSessions || 0,
+            });
           } else {
             getUserData(authContext.currentUser!.uid);
           }

@@ -16,9 +16,9 @@ const Nav: React.FC<NavProps> = ({ onToggleSettings }) => {
 
   return (
     <div>
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 w-3/4 mx-auto bg-slate-900/50 backdrop-blur-md rounded-t-full">
-        <div className="flex justify-between items-center p-4">
-          <div className="flex justify-between items-center gap-12 mx-auto">
+      <div className="fixed inset-x-0 bottom-0 mx-auto w-3/4 rounded-t-full bg-slate-900/50 backdrop-blur-md sm:hidden">
+        <div className="flex items-center justify-between p-4">
+          <div className="mx-auto flex items-center justify-between gap-12">
             <Link to="/">
               <FaHome className={getIconClasses("/")} size={24} />
             </Link>
@@ -26,7 +26,7 @@ const Nav: React.FC<NavProps> = ({ onToggleSettings }) => {
               <FaUser className={getIconClasses("/history")} size={24} />
             </Link>
             <FaCog
-              className="text-slate-400 hover:text-slate-300 transition-colors cursor-pointer"
+              className="cursor-pointer text-slate-400 transition-colors hover:text-slate-300"
               size={24}
               onClick={onToggleSettings}
             />
@@ -34,9 +34,9 @@ const Nav: React.FC<NavProps> = ({ onToggleSettings }) => {
         </div>
       </div>
 
-      <div className="hidden sm:block fixed top-0 left-0 bottom-0 h-1/f my-auto w-16 bg-slate-900/50 backdrop-blur-md rounded-r-2xl">
-        <div className="flex flex-col h-full justify-center items-center p-4">
-          <div className="flex flex-col justify-center items-center gap-12">
+      <div className="h-1/f fixed inset-y-0 left-0 my-auto hidden w-16 rounded-r-2xl bg-slate-900/50 backdrop-blur-md sm:block">
+        <div className="flex h-full flex-col items-center justify-center p-4">
+          <div className="flex flex-col items-center justify-center gap-12">
             <Link to="/">
               <FaHome className={getIconClasses("/")} size={24} />
             </Link>
@@ -44,7 +44,7 @@ const Nav: React.FC<NavProps> = ({ onToggleSettings }) => {
               <FaUser className={getIconClasses("/history")} size={24} />
             </Link>
             <FaCog
-              className="text-slate-400 hover:text-slate-300 transition-colors cursor-pointer"
+              className="cursor-pointer text-slate-400 transition-colors hover:text-slate-300"
               size={24}
               onClick={onToggleSettings}
             />

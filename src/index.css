@@ -55,7 +55,28 @@ h1 {
     @apply transition-all duration-500 ease-in-out;
     @apply hover:from-fuchsia-300/80 hover:to-sky-400/80 hover:shadow-sky-900/40 hover:scale-105;
   }
-  .swiper-button-next,
+
+  .stats-card {
+    @apply bg-slate-800/50 backdrop-blur-sm rounded-2xl p-4 sm:px-12 shadow-lg flex flex-col items-center justify-center gap-2 min-h-[120px];
+    @apply border border-slate-700  transition-all duration-300 hover:border-sky-400 hover:bg-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-400;
+  }
+
+  .stats-grid {
+    @apply grid grid-cols-3 gap-4 sm:gap-8 w-full max-w-md sm:max-w-2xl mx-auto mt-36 sm:mt-0;
+  }
+
+  .stats-number {
+    @apply text-2xl sm:text-2xl font-bold text-slate-200;
+  }
+
+  .stats-label {
+    @apply text-xs sm:text-sm font-medium text-slate-200 text-center leading-tight;
+  }
+
+  .stats-icon {
+    @apply text-lg sm:text-xl mb-1;
+  }
+  § .swiper-button-next,
   .swiper-button-prev {
     color: #0ea5e9;
     transform: scale(0.75);

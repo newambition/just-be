@@ -24,6 +24,8 @@ export interface BreathingExercise {
 export interface SessionLog {
   exerciseId: string;
   completedAt: string; // ISO string
+  duration: number; // in seconds
+  breathsCount: number;
 }
 
 export interface History {
@@ -31,6 +33,10 @@ export interface History {
   counts: { [exerciseId: string]: number };
   streak: number;
   lastSessionDate: string | null; // YYYY-MM-DD
+  totalBreaths: number;
+  minutesBreathing: number;
+  longestStreak: number;
+  totalSessions: number;
 }
 
 export interface AppSettings {

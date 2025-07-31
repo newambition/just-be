@@ -29,7 +29,7 @@ const ExercisePage: React.FC = () => {
 
   if (!exercise) {
     return (
-      <div className="text-center p-8">
+      <div className="p-8 text-center">
         <h2 className="text-2xl text-red-400">Exercise not found</h2>
         <button
           onClick={() => handleCompleteExercise()}
@@ -180,11 +180,11 @@ const ExercisePage: React.FC = () => {
 
   if (sessionState === "finished") {
     return (
-      <div className="text-center p-8 flex flex-col items-center justify-center h-96 animate-fade-in">
-        <h2 className="text-3xl font-bold text-sky-300 font-quicksand">
+      <div className="animate-fade-in flex h-96 flex-col items-center justify-center p-8 text-center">
+        <h2 className="font-quicksand text-3xl font-bold text-sky-300">
           Session Complete
         </h2>
-        <p className="text-slate-300 mt-4 text-lg font-quicksand text-center">
+        <p className="mt-4 text-center font-quicksand text-lg text-slate-300">
           Great job.
           <br />
           You've completed <br />
@@ -192,7 +192,7 @@ const ExercisePage: React.FC = () => {
         </p>
         <button
           onClick={onComplete}
-          className="mt-8 bg-sky-500 hover:bg-sky-600 transition-colors text-white font-bold py-3 px-8 rounded-full shadow-lg font-quicksand"
+          className="mt-8 rounded-full bg-sky-500 px-8 py-3 font-quicksand font-bold text-white shadow-lg transition-colors hover:bg-sky-600"
         >
           Done
         </button>
@@ -202,12 +202,12 @@ const ExercisePage: React.FC = () => {
 
   if (sessionState === "ready") {
     return (
-      <div className="text-center p-8 flex flex-col items-center justify-center h-[35rem] animate-fade-in relative">
+      <div className="animate-fade-in relative flex h-[35rem] flex-col items-center justify-center p-8 text-center">
         <div className="text-slate-200m font-quicksand">
           <Countdown
             date={Date.now() + 3000}
             renderer={({ seconds }) => (
-              <p className="text-5xl font-bold text-sky-300 mb-8">{seconds}</p>
+              <p className="mb-8 text-5xl font-bold text-sky-300">{seconds}</p>
             )}
             onComplete={startSession}
           />
@@ -217,7 +217,7 @@ const ExercisePage: React.FC = () => {
         </div>
         <button
           onClick={() => handleCompleteExercise()}
-          className="mt-4 text-slate-300 hover:text-slate-200 transition-colors text-sm font-quicksand"
+          className="mt-4 font-quicksand text-sm text-slate-300 transition-colors hover:text-slate-200"
         >
           Choose another
         </button>
@@ -226,18 +226,18 @@ const ExercisePage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between p-4 h-[40rem] animate-fade-in relative">
+    <div className="animate-fade-in relative flex h-[40rem] flex-col items-center justify-between p-4">
       <button
         onClick={() => handleCompleteExercise()}
-        className="absolute -top-14 -left-2"
+        className="absolute -left-2 -top-14"
         aria-label="Back to presets"
       >
-        <FaChevronLeft className="text-slate-400 hover:text-slate-200 transition-colors h-6 w-6" />
+        <FaChevronLeft className="size-6 text-slate-400 transition-colors hover:text-slate-200" />
       </button>
 
       <div className="text-center">
         <p
-          className={`text-3xl font-semibold pt-24 transition-colors duration-500 font-quicksand ${phaseColor}`}
+          className={`pt-24 font-quicksand text-3xl font-semibold transition-colors duration-500 ${phaseColor}`}
         >
           {phaseText}
         </p>
@@ -250,10 +250,10 @@ const ExercisePage: React.FC = () => {
         isExpanded={isExpanded}
       />
 
-      <div className="w-full max-w-xs mx-auto">
+      <div className="mx-auto w-full max-w-xs">
         <svg
           viewBox="0 0 100 20"
-          className="w-full h-auto"
+          className="h-auto w-full"
           style={{ transform: "translateY(20px) " }}
         >
           <path d="M 5 5 Q 50 30 95 5" className="progress-arc-track" />
